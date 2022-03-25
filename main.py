@@ -150,17 +150,13 @@ def get_to_tirs(page_data):
     return data_to_tirs
 
 if __name__ == "__main__":
-    path = r'https://fbref.com/fr/equipes/53a2f082/Statistiques-Real-Madrid'
-    page_data = get_page(path)
-
-    data_stats = get_stats(page_data)
-    data_calendars = get_calendars(page_data)
-    data_to_tirs = get_to_tirs(page_data)
+    path = r'https://fbref.com/fr/equipes/054efa67/Statistiques-Bayern-Munich'
 
     data_to_export = []
-    data_to_export.append(data_stats)
-    data_to_export.append(data_calendars)
-    data_to_export.append(data_to_tirs)
+
+    data_to_export.append(get_stats(get_page(path)))
+    data_to_export.append(get_calendars(get_page(path)))
+    data_to_export.append(get_to_tirs(get_page(path)))
 
 
     #print(pd.DataFrame(data_export).to_string())
