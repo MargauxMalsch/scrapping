@@ -13,12 +13,13 @@ def get_page(url):
 
 def get_stats(page_data):
     data_stats = []
+    #creation du tableau
     array = []
-
+    #recupération du titre
     titre = page_data.find('h2').text
     data_stats.append(titre)
 
-# avec une boucle for on récupere dans le grand tableau les tableaux avec la donnée
+# avec une boucle for on récupere dans le grand tableau et on fais des tableaux dedans pour chaque tableaux
     table = page_data.find('tbody')
     for row in table.find_all('tr'):
         player = {
@@ -72,8 +73,10 @@ def get_stats(page_data):
 # la on créeer le deuxime tableau
 def get_calendars(page_data):
     data_calendar = []
+    # creation du tableau
     array = []
 
+    # recupération du titre
     titre = page_data.find_all('h2')[1].text
     data_calendar.append(titre)
     table = page_data.find_all('tbody')[1]
@@ -103,11 +106,13 @@ def get_calendars(page_data):
 
 
 # ici le 3eme
-def get_tirs(page_data):
-    data_tirs = []
+def get_to_tirs(page_data):
+    data_to_tirs = []
+    # creation du tableau
     array = []
+
     titre = page_data.find_all('h2')[4].text
-    data_tirs.append(titre)
+    data_to_tirs.append(titre)
     table = page_data.find_all('tbody')[4]
     for row in table.find_all('tr'):
         players = {
@@ -140,8 +145,8 @@ def get_tirs(page_data):
         }
 
         array.append(players)
-    data_tirs.append(array)
-    return data_tirs
+    data_to_tirs.append(array)
+    return data_to_tirs
 
 if __name__ == "__main__":
     path = r'https://fbref.com/fr/equipes/53a2f082/Statistiques-Real-Madrid'
@@ -149,12 +154,12 @@ if __name__ == "__main__":
 
     data_stats = get_stats(page_data)
     data_calendars = get_calendars(page_data)
-    data_tirs = get_tirs(page_data)
+    data_to_tirs = get_to_tirs(page_data)
 
     data_to_export = []
     data_to_export.append(data_stats)
     data_to_export.append(data_calendars)
-    data_to_export.append(data_tirs)
+    data_to_export.append(data_to_tirs)
 
 
     #print(pd.DataFrame(data_export).to_string())
