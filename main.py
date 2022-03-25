@@ -101,7 +101,7 @@ def get_calendars(page_data):
             'arbitre': row.find('td', {"data-stat": "referee"}).text,
         }
         array.append(match)
-        data_calendar.append(array)
+    data_calendar.append(array)
     return data_calendar
 
 
