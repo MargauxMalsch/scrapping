@@ -69,16 +69,92 @@ def get_stats(page_data):
     return data_stats
 
 
+# la on créeer le deuxime tableau
+def get_calendars(page_data):
+    data_calendar = []
+    array = []
 
+    titre = page_data.find_all('h2')[1].text
+    data_calendar.append(titre)
+    table = page_data.find_all('tbody')[1]
+    for row in table.find_all('tr'):
+        match = {
+            'date': row.find('th', {"data-stat": "date"}).text,
+            'heure': row.find('td', {"data-stat": "time"}).text,
+            'comp': row.find('td', {"data-stat": "comp"}).text,
+            'tour': row.find('td', {"data-stat": "round"}).text,
+            'jour': row.find('td', {"data-stat": "dayofweek"}).text,
+            'tribune': row.find('td', {"data-stat": "venue"}).text,
+            'résultats': row.find('td', {"data-stat": "result"}).text,
+            'BM': row.find('td', {"data-stat": "goals_for"}).text,
+            'BE': row.find('td', {"data-stat": "goals_against"}).text,
+            'Adversaire': row.find('td', {"data-stat": "opponent"}).text,
+            'xG': row.find('td', {"data-stat": "xg_for"}).text,
+            'xGA': row.find('td', {"data-stat": "xg_against"}).text,
+            'poss': row.find('td', {"data-stat": "possession"}).text,
+            'affluence': row.find('td', {"data-stat": "attendance"}).text,
+            'capitaine': row.find('td', {"data-stat": "captain"}).text,
+            'formation': row.find('td', {"data-stat": "formation"}).text,
+            'arbitre': row.find('td', {"data-stat": "referee"}).text,
+        }
+        array.append(match)
+        data_calendar.append(array)
+    return data_calendar
+
+
+# ici le 3eme
+def get_tirs(page_data):
+    data_tirs = []
+    array = []
+    titre = page_data.find_all('h2')[4].text
+    data_tirs.append(titre)
+    table = page_data.find_all('tbody')[4]
+    for row in table.find_all('tr'):
+        players = {
+            'Les joueurs': row.find('th', {"data-stat": "player"}).text,
+            'Nation': row.find('td', {"data-stat": "nationality"}).text,
+            'Pos': row.find('td', {"data-stat": "position"}).text,
+            'Age': row.find('td', {"data-stat": "age"}).text,
+            '90': row.find('td', {"data-stat": "minutes_90s"}).text,
+            'Standard': {
+                'Buts': row.find('td', {"data-stat": "goals"}).text,
+                'Tirs': row.find('td', {"data-stat": "shots_total"}).text,
+                'Tc': row.find('td', {"data-stat": "shots_on_target"}).text,
+                'TC % ': row.find('td', {"data-stat": "shots_on_target_pct"}).text,
+                'TC/90': row.find('td', {"data-stat": "shots_on_target_per90"}).text,
+                'B/TIR': row.find('td', {"data-stat": "goals_per_shot"}).text,
+                'B/TC': row.find('td', {"data-stat": "goals_per_shot_on_target"}).text,
+                'Dist': row.find('td', {"data-stat": "average_shot_distance"}).text,
+                'CF': row.find('td', {"data-stat": "shots_free_kicks"}).text,
+                'PénM': row.find('td', {"data-stat": "pens_made"}).text,
+                'PénT': row.find('td', {"data-stat": "pens_att"}).text,
+            },
+            'Attendu': {
+                'xg': row.find('td', {"data-stat": "xg"}).text,
+                'npxG': row.find('td', {"data-stat": "npxg"}).text,
+                'npxg/sh': row.find('td', {"data-stat": "npxg_per_shot"}).text,
+                'G-xg': row.find('td', {"data-stat": "xg_net"}).text,
+                'np': row.find('td', {"data-stat": "npxg_net"}).text,
+            },
+
+        }
+
+        array.append(players)
+    data_tirs.append(array)
+    return data_tirs
 
 if __name__ == "__main__":
     path = r'https://fbref.com/fr/equipes/53a2f082/Statistiques-Real-Madrid'
     page_data = get_page(path)
 
     data_stats = get_stats(page_data)
+    data_calendars = get_calendars(page_data)
+    data_tirs = get_tirs(page_data)
 
     data_to_export = []
     data_to_export.append(data_stats)
+    data_to_export.append(data_calendars)
+    data_to_export.append(data_tirs)
 
 
     #print(pd.DataFrame(data_export).to_string())
