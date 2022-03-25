@@ -126,6 +126,7 @@ def get_to_tirs(page_data):
                 'Tirs': row.find('td', {"data-stat": "shots_total"}).text,
                 'Tc': row.find('td', {"data-stat": "shots_on_target"}).text,
                 'TC % ': row.find('td', {"data-stat": "shots_on_target_pct"}).text,
+                'Tir/90': row.find('td', {"data-stat": "shots_total_per90"}).text,
                 'TC/90': row.find('td', {"data-stat": "shots_on_target_per90"}).text,
                 'B/TIR': row.find('td', {"data-stat": "goals_per_shot"}).text,
                 'B/TC': row.find('td', {"data-stat": "goals_per_shot_on_target"}).text,
@@ -139,7 +140,7 @@ def get_to_tirs(page_data):
                 'npxG': row.find('td', {"data-stat": "npxg"}).text,
                 'npxg/sh': row.find('td', {"data-stat": "npxg_per_shot"}).text,
                 'G-xg': row.find('td', {"data-stat": "xg_net"}).text,
-                'np': row.find('td', {"data-stat": "npxg_net"}).text,
+                'np:G-xG': row.find('td', {"data-stat": "npxg_net"}).text,
             },
 
         }
